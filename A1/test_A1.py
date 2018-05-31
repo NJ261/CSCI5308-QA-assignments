@@ -16,11 +16,14 @@ class test_A1(unittest.TestCase):
     def test_partsCheck(self):
         self.assertEqual(A1.validate_parts("1233", "2"), "Part Number and Quantity are good.")
         self.assertEqual(A1.validate_parts(None, "5"), "Invalid Input XML Response: Error in Part number")
-        self.assertEqual(A1.validate_parts("-1234", "2"), "Invalid Input XML Response: Error in Quantity")
-        self.assertEqual(A1.validate_parts("0", "5"), "Invalid Input XML Response: Error in Part number")
         self.assertEqual(A1.validate_parts("1234", None), "Invalid Input XML Response: Error in Quantity")
         
-    
+    def test_delivery(self):
+        self.assertEqual(A1.validate_delivery("Mr. Jadeja"), "Delivery Details are good")
+        self.assertEqual(A1.validate_delivery("South Park St."), "Delivery Details are good")
+        self.assertEqual(A1.validate_delivery("Halifax"), "Delivery Details are good")
+        self.assertEqual(A1.validate_delivery("NS"), "Delivery Details are good")
+        self.assertEqual(A1.validate_delivery("B3J2K9"), "Delivery Details are good")
         
         
 if __name__ == '__main__':
