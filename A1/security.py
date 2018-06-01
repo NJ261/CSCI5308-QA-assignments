@@ -12,7 +12,8 @@ class security:
         
         for i in range(0, temp_length):
             if self.dealerId in mock_data.dealer_list[i]:
-                msg = "dealer authenticated"
+                if self.dealerAccessKey in mock_data.dealer_key[i]:
+                    msg = "dealer authenticated"
             else:
                 msg = "dealer not authorized"
                 
