@@ -6,18 +6,20 @@ class Security:
         self.dealerId = dealerId
         self.dealerAccessKey = dealerAccessKey
         
+    # validate dealer id and access key for null value
     def validate_dealer(self):
-        validate_msg = "Invalid Input XML Response"
+        validate_msg = "Invalid Input XML Response Error: in Dealer Id"
         if self.dealerId is None:
             print validate_msg                # checking DEALER ID is not null
-        elif self.dealerKey is None:
+        elif self.dealerAccessKey is None:
+            validate_msg = "Invalid Input XML Response Error: in Dealer Access Key"
             print validate_msg                 # checking DEALER ACCESS KEY is not null
         else:
-            validate_msg = "Dealer Authenticated"
+            validate_msg = "Dealer details validated"
             pass
         return validate_msg
 
-        
+    # authenticate dealer id and access key with mock data
     def authenticate(self):
         
         temp_length = len(mock_data.dealer_list)
@@ -28,6 +30,6 @@ class Security:
                     msg = "dealer authenticated"
                 break
             else:
-                msg = "dealer not authorized"
+                msg = "dealer not authorized."
                 
         return msg
