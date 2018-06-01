@@ -43,16 +43,47 @@ for order in order_items.findall('item'):
 #if None in order_quantity or order_part_number or delivery_add_tag or dealer_tag or main_tag:
 #   print "************************   Invalid input XML   ************************"
         
-
 sec = security.Security(dealer_tag[0], dealer_tag[1])
-print(sec.authenticate())
-
 part_manage = part_manager.Part_Manager(order_part_number, order_quantity)
-print(part_manage.validate_parts())
-
 delivery_details = part_manager.delivery_address(delivery_add_tag[0], delivery_add_tag[1],
                                                  delivery_add_tag[2],delivery_add_tag[3],delivery_add_tag[4])
-delivery_details.validate_delivery()  
+dealer_validate = sec.validate_dealer()
+
+if len(dealer_validate) < 25:
+    parts_validation = part_manage.validate_parts()
+    
+    if len(parts_validation) < 40:
+        delivery_details_validation = delivery_details.validate_delivery()
+        
+        if len(delivery_details_validation) < 40:
+            dealer_auth = sec.authenticate()
+            
+            if len(dealer_auth) < 21:
+                part_check = part_manage.part_number_checking()
+                
+                if len(part_check) < 8:
+                    print "here to construct valid XML response. ***********"
+                    
+                else:
+                    print "part check error XML response i.e out of stock, no longer manufactured ***********"
+                    
+            else:
+                print "dealer not authozed XML Response ************"
+                
+        else:
+            print "delivery details XML response *********"
+            
+    else:
+        print "part validation XML response ********"
+
+    
+else:
+    print dealer_validate
+
+
+print()
+
+  
 
 
 """ REFERENCES:
