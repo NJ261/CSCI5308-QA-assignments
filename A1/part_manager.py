@@ -44,7 +44,7 @@ class Part_Manager:
         return temp_msg
     
     # part number checking with mock data, returning value with item status i.e success, invalid part, out of stock
-    def part_number_checking(self):
+    def SubmitPartForManufactureAndDelivery(self):
         
         temp_length = len(mock_data.part_number)
         temp_list = self.part_number
@@ -63,7 +63,7 @@ class Part_Manager:
         
     
 # for verifying details whether they are not empty
-class delivery_address:
+class DeliveryAddress:
     
     def __init__(self, name, address, city, province, postalCode):
         self.name = name
