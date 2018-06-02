@@ -27,7 +27,8 @@ class test_A1(unittest.TestCase):
         self.auth2 = security.Security("XXX-1111-ABCD-1111", "abcd123wxyz456qwerty78901")
         self.auth3 = security.Security("XXX-2222-ABCD-2222", "kkklas8882kk23nllfjj88292") 
 
-        self.part_status1 = part_manager.Part_Manager(["1234", "1111", "2222", "3333", "4444", "fake_part_number"], ["1","2","3","4","5","6"])     
+        self.part_status1 = part_manager.Part_Manager(["1234", "1111", "2222", "3333", "4444", "fake_part_number"], 
+                                                      ["1","2","3","4","5","6"])     
 
     
 # -----------------------------------  Class: Security  ----------------------------------- 
@@ -67,7 +68,8 @@ class test_A1(unittest.TestCase):
     
     # ------------------------------  Method: SubmitPartForManufactureAndDelivery -----------
     def test_part_status_check(self):
-        self.assertEqual(self.part_status1.SubmitPartForManufactureAndDelivery(), ['success', 'out of stock', 'no longer manufactured', 'invalid part', 'success', 'Invalid Part'])
+        self.assertEqual(self.part_status1.SubmitPartForManufactureAndDelivery(), 
+                         ['success', 'out of stock', 'no longer manufactured', 'invalid part', 'success', 'Invalid Part'])
         
 
 # -----------------------------------  Class: A1  -------------------------------------------
@@ -75,16 +77,26 @@ class test_A1(unittest.TestCase):
         
     # ------------------------------  Method: main_function ---------------------------------
     def test_main_function(self):
-        self.assertEqual(A1.main_function(['XXX-1234-ABCD-1234', 'kkklas8882kk23nllfjj88290'], ['Mrs. Jane Smith', '35 Streetname', 'Halifax', 'NS', 'B2T1A4'], ['1234', '5678'], ['2', '25']), "Dealer is authorized, check the response in output.xml")
-        self.assertEqual(A1.main_function([None, 'kkklas8882kk23nllfjj88290'], ['Mrs. Jane Smith', '35 Streetname', 'Halifax', 'NS', 'B2T1A4'], ['1234', '5678'], ['2', '25']), "Invalid Input XML Response Error: in Dealer Id")
-        self.assertEqual(A1.main_function(['XXX-1234-ABCD-1234', None], ['Mrs. Jane Smith', '35 Streetname', 'Halifax', 'NS', 'B2T1A4'], ['1234', '5678'], ['2', '25']), "Invalid Input XML Response Error: in Dealer Access Key")
-        self.assertEqual(A1.main_function(['XXX-1234-ABCD-1234', 'kkklas8882kk23nllfjj88290'], [None, '35 Streetname', 'Halifax', 'NS', 'B2T1A4'], ['1234', '5678'], ['2', '25']), "Invalid Input XML Response: Error in Delivery Details")
-        self.assertEqual(A1.main_function(['XXX-1234-ABCD-1234', 'kkklas8882kk23nllfjj88290'], ['Mrs. Jane Smith', None, 'Halifax', 'NS', 'B2T1A4'], ['1234', '5678'], ['2', '25']), "Invalid Input XML Response: Error in Delivery Details")
-        self.assertEqual(A1.main_function(['XXX-1234-ABCD-1234', 'kkklas8882kk23nllfjj88290'], ['Mrs. Jane Smith', '35 Streetname', None, 'NS', 'B2T1A4'], ['1234', '5678'], ['2', '25']), "Invalid Input XML Response: Error in Delivery Details")
-        self.assertEqual(A1.main_function(['XXX-1234-ABCD-1234', 'kkklas8882kk23nllfjj88290'], ['Mrs. Jane Smith', '35 Streetname', 'Halifax', None, 'B2T1A4'], ['1234', '5678'], ['2', '25']), "Invalid Input XML Response: Error in Delivery Details")
-        self.assertEqual(A1.main_function(['XXX-1234-ABCD-1234', 'kkklas8882kk23nllfjj88290'], ['Mrs. Jane Smith', '35 Streetname', 'Halifax', 'NS', None], ['1234', '5678'], ['2', '25']), "Invalid Input XML Response: Error in Delivery Details")
-        self.assertEqual(A1.main_function(['XXX-1234-ABCD-1234', 'kkklas8882kk23nllfjj88290'], ['Mrs. Jane Smith', '35 Streetname', 'Halifax', 'NS', 'B2T1A4'], ["0000", '5678'], ['2', '25']), "Dealer is authorized, check the response in output.xml")   
-        self.assertEqual(A1.main_function(['XXX-1234-ABCD-1234', 'kkklas8882kk23nllfjj88290'], ['Mrs. Jane Smith', '35 Streetname', 'Halifax', 'NS', 'B2T1A4'], ['1234', '5678'], ['0', '25']), "Invalid Input XML Response: Error in Quantity")
+        self.assertEqual(A1.main_function(['XXX-1234-ABCD-1234', 'kkklas8882kk23nllfjj88290'], ['Mrs. Jane Smith', '35 Streetname', 'Halifax', 'NS', 'B2T1A4'],
+                                          ['1234', '5678'], ['2', '25']), "Dealer is authorized, check the response in output.xml")
+        self.assertEqual(A1.main_function([None, 'kkklas8882kk23nllfjj88290'], ['Mrs. Jane Smith', '35 Streetname', 'Halifax', 'NS', 'B2T1A4'], ['1234', '5678'],
+                                          ['2', '25']), "Invalid Input XML Response Error: in Dealer Id")
+        self.assertEqual(A1.main_function(['XXX-1234-ABCD-1234', None], ['Mrs. Jane Smith', '35 Streetname', 'Halifax', 'NS', 'B2T1A4'],
+                                          ['1234', '5678'], ['2', '25']), "Invalid Input XML Response Error: in Dealer Access Key")
+        self.assertEqual(A1.main_function(['XXX-1234-ABCD-1234', 'kkklas8882kk23nllfjj88290'], [None, '35 Streetname', 'Halifax', 'NS', 'B2T1A4'], ['1234', '5678'], 
+                                          ['2', '25']), "Invalid Input XML Response: Error in Delivery Details")
+        self.assertEqual(A1.main_function(['XXX-1234-ABCD-1234', 'kkklas8882kk23nllfjj88290'], ['Mrs. Jane Smith', None, 'Halifax', 'NS', 'B2T1A4'],
+                                          ['1234', '5678'], ['2', '25']), "Invalid Input XML Response: Error in Delivery Details")
+        self.assertEqual(A1.main_function(['XXX-1234-ABCD-1234', 'kkklas8882kk23nllfjj88290'], ['Mrs. Jane Smith', '35 Streetname', None, 'NS', 'B2T1A4'],
+                                          ['1234', '5678'], ['2', '25']), "Invalid Input XML Response: Error in Delivery Details")
+        self.assertEqual(A1.main_function(['XXX-1234-ABCD-1234', 'kkklas8882kk23nllfjj88290'], ['Mrs. Jane Smith', '35 Streetname', 'Halifax', None, 'B2T1A4'], 
+                                          ['1234', '5678'], ['2', '25']), "Invalid Input XML Response: Error in Delivery Details")
+        self.assertEqual(A1.main_function(['XXX-1234-ABCD-1234', 'kkklas8882kk23nllfjj88290'], ['Mrs. Jane Smith', '35 Streetname', 'Halifax', 'NS', None], 
+                                          ['1234', '5678'], ['2', '25']), "Invalid Input XML Response: Error in Delivery Details")
+        self.assertEqual(A1.main_function(['XXX-1234-ABCD-1234', 'kkklas8882kk23nllfjj88290'], ['Mrs. Jane Smith', '35 Streetname', 'Halifax', 'NS', 'B2T1A4'],
+                                          ["0000", '5678'], ['2', '25']), "Dealer is authorized, check the response in output.xml")   
+        self.assertEqual(A1.main_function(['XXX-1234-ABCD-1234', 'kkklas8882kk23nllfjj88290'], ['Mrs. Jane Smith', '35 Streetname', 'Halifax', 'NS', 'B2T1A4'],
+                                          ['1234', '5678'], ['0', '25']), "Invalid Input XML Response: Error in Quantity")
 
 
         
