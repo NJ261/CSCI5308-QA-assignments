@@ -20,14 +20,16 @@ class Security:
         return validate_msg
 
     # authenticate dealer id and access key with mock data
-    def authenticate(self):
+    def isDealerAuthorized(self):
         
         temp_length = len(mock_data.dealer_list)
         
         for i in range(0, temp_length):
+
             if self.dealerId in mock_data.dealer_list[i]:
                 if self.dealerAccessKey in mock_data.dealer_key:
                     msg = "dealer authenticated"
+                
                 break
             else:
                 msg = "dealer not authorized."
