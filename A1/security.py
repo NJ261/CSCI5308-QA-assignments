@@ -33,5 +33,8 @@ class Security:
                 break
             else:
                 msg = "dealer not authorized."
+        
+        if len(msg) > 21:
+            print msg
                 
         return msg
