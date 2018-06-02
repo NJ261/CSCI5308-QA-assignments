@@ -20,7 +20,7 @@ class Part_Manager:
                 temp_msg = "Invalid Input XML Response: Error in Part number"
                 print temp_msg
                 break
-            
+             
             else:
                 temp.append(int(self.part_number[i]))
                                 
