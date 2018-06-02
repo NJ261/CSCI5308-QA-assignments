@@ -191,7 +191,6 @@ def authorized_response_XML(error_response):
 # -----------------------------------  MAIN LOGIC FUNCTION ----------------------------------- 
 def main_function(dealer_tag, delivery_add_tag, order_part_number, order_quantity):
     
-    print dealer_tag, delivery_add_tag, order_part_number, order_quantity
     sec = security.Security(dealer_tag[0], dealer_tag[1])
     part_manage = part_manager.Part_Manager(order_part_number, order_quantity)
     
