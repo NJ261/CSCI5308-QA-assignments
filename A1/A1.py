@@ -2,18 +2,11 @@ import xml.etree.ElementTree as ET
 import security
 import part_manager
 
-""""
-1. input of the xml
-3. main static interface for input and output
-6. tests in different class and file
-
-"""
-#input_file = raw_input("Please enter input file: ")
-#tree = ET.parse(input_file)
-
-
-tree = ET.parse('in_order.xml')
-root = tree.getroot()
+def input_function(file_name):
+    global root
+    tree = ET.parse(file_name)
+    root = tree.getroot()
+    main_tag_function(root)
 
 main_tag = []
 dealer_tag = []
@@ -21,7 +14,8 @@ order_part_number = []
 order_quantity = []
 delivery_add_tag = []
 
-# writing XML: invalid input XML response
+
+# -----------------------------------  WRITING XML OUTPUT FILE  ----------------------------------- 
 def invalid_response_XML(error_msg):
     
     order = ET.Element("order")
@@ -33,9 +27,9 @@ def invalid_response_XML(error_msg):
     tree.write("output.xml")
     
     
-# ---------- input XML reading -------------
+# START -----------------------------------  INPUT XML PARSING  ----------------------------------- 
 
-def main_tag_function():
+def main_tag_function(root):
     
     count = 0
     for child in root:
@@ -43,17 +37,19 @@ def main_tag_function():
         
     temp_main_tag = ['dealer','orderitems','deliveryaddress']
     
-    for i in range(0, len(temp_main_tag)):  # **************
+    for i in range(0, len(temp_main_tag)):
         if temp_main_tag[i] in main_tag:
             count = count + 1
         else:
             invalid_response_XML("Invalid input XML response")
+            print "Invalid input XML response"
             break
         
     if count == 3:
         dealer_tag()
     else:
         invalid_response_XML("Invalid input XML response")
+        print "Invalid input XML response"
     
     
 def dealer_tag():  
@@ -68,6 +64,7 @@ def dealer_tag():
 
         else:
             invalid_response_XML("Invalid input XML response")
+            print "Invalid input XML response"
             break
         
     if count == 2:
@@ -78,9 +75,9 @@ def dealer_tag():
         delivery_add_tag(temp_dealer_tag)
     else:
         invalid_response_XML("Invalid input XML response")
+        print "Invalid input XML response"
     
     
-
 def delivery_add_tag(temp_list):
     count = 0
     delivery_add_tag = [t.tag for t in root.findall('.//deliveryaddress/*')]
@@ -92,6 +89,7 @@ def delivery_add_tag(temp_list):
             count = count + 1
         else:
             invalid_response_XML("Invalid input XML response")
+            print "Invalid input XML response"
             break
         
     if count == 5:
@@ -105,31 +103,55 @@ def delivery_add_tag(temp_list):
         order_items_tag(temp_list, temp_delivery_add_tag)
     else:
         invalid_response_XML("Invalid input XML response")
+        print "Invalid input XML response"
         
     
-        
+       
 def order_items_tag(temp_list_dealer, temp_list_delivery):
     
+    count = 0
+    item_tag = [t.tag for t in root.findall('.//orderitems/*')]
     
-    order_items = root.find("orderitems")
-    for order in order_items.findall('item'):
-        part_number = order.find('partnumber')
-        quantity = order.find('quantity')
-        
-        if part_number.text is None or quantity.text is None :
-            print "Invalid Input XML Response"
-            invalid_response_XML("Invalid input XML response")
-            break
+    if len(item_tag) != 0:
+        sub_item_tag = [t.tag for t in root.findall('.//item/*')]
+        if (len(sub_item_tag) % 2) == 0:
             
+            order_items = root.find("orderitems")
+            for order in order_items.findall('item'):
+                part_number = order.find('partnumber')
+                quantity = order.find('quantity')
+                
+                if part_number.text is None:
+                    print "Invalid Input XML Response Error: in Part Number"
+                    invalid_response_XML("Invalid input XML response Error: in Part Number")
+                    count = count + 1
+                    break
+                
+                elif quantity.text is None:
+                    print "Invalid Input XML Response Error: in Quantity"
+                    invalid_response_XML("Invalid input XML response Error: in Quantity")
+                    count = count + 1
+                    break
+                
+                else:
+                    order_quantity.append(quantity.text)
+                    order_part_number.append(part_number.text)
+                    
+            if count == 0:        
+                main_function(temp_list_dealer, temp_list_delivery, order_part_number, order_quantity)
+
         else:
-            order_quantity.append(quantity.text)
-            order_part_number.append(part_number.text)
-            
-    main_function(temp_list_dealer, temp_list_delivery, order_part_number, order_quantity)
+            print "Invalid Input XML Response Error: in tags"
+            invalid_response_XML("Invalid input XML response Error: in tags")
+    else:
+        print "Invalid Input XML Response Error: in tags"
+        invalid_response_XML("Invalid input XML response Error: in tags")
+        
 
-            
+# END -----------------------------------  INPUT XML PARSING  -----------------------------------         
 
-# ---------- Writing output XML -------------
+
+# -----------------------------------  WRITING XML OUTPUT FILE  ----------------------------------- 
         
 # writing XML: dealer not authorized XML
 def not_authorized_XML():
@@ -165,10 +187,11 @@ def authorized_response_XML(error_response):
     tree = ET.ElementTree(order)
     tree.write("output.xml")
             
-
+    
+# -----------------------------------  MAIN LOGIC FUNCTION ----------------------------------- 
 def main_function(dealer_tag, delivery_add_tag, order_part_number, order_quantity):
     
-
+    print dealer_tag, delivery_add_tag, order_part_number, order_quantity
     sec = security.Security(dealer_tag[0], dealer_tag[1])
     part_manage = part_manager.Part_Manager(order_part_number, order_quantity)
     
@@ -195,25 +218,31 @@ def main_function(dealer_tag, delivery_add_tag, order_part_number, order_quantit
                     if len(part_check) < 8:
                         # writing successful XML response 
                         authorized_response_XML(part_check)
+                        msg = "Dealer is authorized, check the response in output.xml"
+                        print msg
                         
                 else:
                     # writing Fault XML Response: Dealer is not authorized
-                    not_authorized_XML()    
+                    not_authorized_XML()  
+                    msg = "Dealer is not authorized"
+                    print msg
                     
             else:
                 # writing Fault XML response: Delivery details
                 invalid_response_XML(delivery_details_validation)   
+                print delivery_details_validation
+                msg = delivery_details_validation
                 
         else:
             # writing Fault XML response: Part number and quantity
-            invalid_response_XML(parts_validation)      
+            invalid_response_XML(parts_validation) 
+            print parts_validation
+            msg = parts_validation
             
     else:
         # writing Fault XML Response: Dealer ID or Access key
-        invalid_response_XML(dealer_validate)       
+        invalid_response_XML(dealer_validate)    
+        print dealer_validate
+        msg = dealer_validate
 
-main_tag_function()
-""" REFERENCES:
-    1. https://docs.python.org/2/library/xml.etree.elementtree.html
-    """
-    
+    return msg 
