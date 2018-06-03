@@ -224,24 +224,20 @@ def main_function(dealer_tag, delivery_add_tag, order_part_number, order_quantit
                     # writing Fault XML Response: Dealer is not authorized
                     not_authorized_XML()  
                     msg = "Dealer is not authorized"
-                    print msg
                     
             else:
                 # writing Fault XML response: Delivery details
                 invalid_response_XML(delivery_details_validation)   
-                print delivery_details_validation
                 msg = delivery_details_validation
                 
         else:
             # writing Fault XML response: Part number and quantity
             invalid_response_XML(parts_validation) 
-            print parts_validation
             msg = parts_validation
             
     else:
         # writing Fault XML Response: Dealer ID or Access key
         invalid_response_XML(dealer_validate)    
-        print dealer_validate
         msg = dealer_validate
 
     return msg 
