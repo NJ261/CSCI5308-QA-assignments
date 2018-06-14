@@ -7,6 +7,18 @@
   - A module named "Unittest" for test
   - A module named "xml.etree.ElementTree" for parsing and writing XML files
 
+### How to run (CMD or Terminal)
+if python 2.7 is in default system file path
+```
+python order.py
+```
+else
+```
+py -2 order.py
+```
+
+and then provide the input xml file name i.e abc.xml
+once input XML is provided, respective response file named 'output.xml' will be generated in the same directory.
 
 
 ### Files in repo
