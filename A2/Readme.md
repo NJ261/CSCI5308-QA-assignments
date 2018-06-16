@@ -6,21 +6,21 @@
 ##### Explanation:
 The high level employee class Employer depends on 2 other classes directly HourlyWorker and SalaryWorker. We can't change the data further.
 
-**Solution:** Here, an interface is defined 'IEmployerInterface' with the method 'float calculate(int hours);' and in the Employer class only one array objects is made and all 3 classes Employer, HourlyWorker, SalaryWorker are have been known with the interface and HourlyWorker and SalaryWorker are implemented with the interface.
+**Solution:** Here, an interface is defined 'IEmployerInterface' with the method 'float calculate(int hours);' and in the Employer class only one array objects is made and all 3 classes Employer, HourlyWorker, SalaryWorker have been known with the interface and HourlyWorker and SalaryWorker are implemented with the interface.
 
 ### Question 2
 ##### Principle violated: Interface Segregation Principle
 ##### Explanation:
 Here, common interface ILibraryItem is there for both the classes which indicates repetition in methods for both the classes.
 
-**Solution:** Here, 3 interfaces are defined named IBookSwitch (for Book class), ILibraryItem (for DVD class) and one common interface name 'ICommonDetails' is extended with common menthods with other 2 interfaces and in other 2 classes methods which are not part relevant has been removed respectively.
+**Solution:** Here, 3 interfaces are defined named IBookSwitch (for Book class), ILibraryItem (for DVD class) and one common interface name 'ICommonDetails' is extended with common menthods with other 2 interfaces. In other 2 classes the methods which are not part relevant has been removed respectively for making .
 
 ### Question 3
 ##### Principle violated: Single Responsibility Principle
 ##### Explanation:
 Here, class named 'ProfitReport' has more than 1 responsibility (sending data to printer and email) rather than creating report.
 
-**Solution:** For the solution, ProfitReport class is divided in other 2 classes named EmailInformation and Printer which contains methods that were part of ProfitReport. Hence, each class have the single responsibility.
+**Solution:** For the solution, ProfitReport class is divided in other 2 classes named EmailInformation and Printer which contains methods that were part of ProfitReport. Hence, each class has the single responsibility.
 
 ### Question 4
 ##### Principle violated: Liskov Substitution Principle
@@ -48,7 +48,7 @@ The 'PiggyBank' class has more than 1 responsibility (save and load). so it viol
 ##### Explanation:
 Here, methods in both classes are dependent on single interface 'IInsect'. Hence, interface segregation is applied.
 
-**Solution:** Here, two interfaces (IInsectFly, IInsectSwim) are provided for 2 classes for the connection. The purpose for the same is to remove dependency on the earlier single interface. One common interfaces is added (IInsectWithAntennae) with has common method for 2 classes and this interface is extended in other 2 interfaces.
+**Solution:** Here, two interfaces (IInsectFly, IInsectSwim) are provided for 2 classes for the connection. The purpose for the same is to remove dependency on the earlier single interface. One common interfaces is added (IInsectWithAntennae) which has common method for 2 classes and this interface is extended in other 2 interfaces.
 
 ### References
 [1] "SOLID Design Principles Explained – Dependency Inversion Principle with Code Examples", stackify.com. [Online]. Available: https://stackify.com/dependency-inversion-principle/. [Accessed: 13- June- 2018]
