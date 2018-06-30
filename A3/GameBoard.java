@@ -23,10 +23,6 @@ public class GameBoard
 		return instance;
 	}
 	
-	// Notice how this is private, this enforces the use of the singleton through
-	// the Instance() accessor.  You can't instantiate this class outside of this
-	// class.  Imagine if you could!  You'd have multiple game boards, multiple
-	// game states, ugh what a mess.
 	private GameBoard()
 	{
 		board = null;
@@ -50,12 +46,6 @@ public class GameBoard
 		return factory;
 	}
 	
-	// This processses the input command file, using the factory to make
-	// commands, and then executes the commands the factory makes.
-	// Notice how this code has NO IDEA what command is created, or what the
-	// command evend does.  We can add any commands we want and this code will
-	// just keep working.  This is the INVOKER portion of the Command UML for
-	// this program.
 	public void ProcessCommands(String commandFileName)
 	{
 		try
