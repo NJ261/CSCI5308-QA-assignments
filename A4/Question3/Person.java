@@ -1,32 +1,29 @@
-public class Person
+public class Person 
 {
 	public String name;
-	private Address personAddress;
+	public String street; 
+	public String city;
+	public String province;
+	public String postalCode;
+	
+	Address address;
+
 	public Person()
 	{
+		address = new Address("Rob street", "Rob city", "Rob province", "Rob postalcode");
 		name = "Rob";
-		personAddress = new Address();
-		personAddress.setCity("Rob street");
-		personAddress.setPostalCode("Rob street");
-		personAddress.setProvince("Rob street");
-		personAddress.setStreet("Rob street");	
-	}
-
-	public Address getAddress() {
-		return personAddress;
 	}
 
 	public boolean IsPersonRob()
 	{
-		return name.equals("Rob") && IsRobsAddress(new Address("Rob street", "Rob street", "Rob street", "Rob street"));
+		return name.equals("Rob") && IsRobsAddress(address);
 	}
 
 	private boolean IsRobsAddress(Address address)
 	{
-		return personAddress.getStreet().equals(address.getStreet()) &&
-				personAddress.getCity().equals(address.getCity()) &&
-				personAddress.getProvince().equals(address.getProvince()) &&
-				personAddress.getProvince().equals(address.getProvince());
-
+		return address.getStreet().equals("Rob street") &&
+			address.getCity().equals("Rob city") &&
+			address.getProvince().equals("Rob province") &&
+			address.getPostalCode().equals("Rob postalcode");
 	}
 }
